@@ -1,6 +1,6 @@
-import illusions from './illusions/index.js?v=18';
-import { createPixiStimuli } from './pixi-scenes.js?v=18';
-import { uiText, demoText, controlText, presentationCueText } from './i18n.js?v=18';
+import illusions from './illusions/index.js?v=19';
+import { createPixiStimuli } from './pixi-scenes.js?v=19';
+import { uiText, demoText, controlText, presentationCueText } from './i18n.js?v=19';
 
 const $=sel=>document.querySelector(sel);
 const storageKey='visual-illusions-lab-v5',legacyKey='visual-illusions-lab-v4',cookiePrefix='vil_settings_v1_';
@@ -132,7 +132,7 @@ function presentationAt(t=elapsed(),demo=current()){
     return {duration,type:'logo',freeze:true,sceneAt:0,index:0,start:0,local:Math.max(0,Math.min(duration,t)),total:duration};
   }
   const raw=typeof demo.presentation==='function'?demo.presentation({state:state(),lang:app.lang,age:app.age,copy:copyFor(demo,'presentation')}):(demo.presentation||genericPresentation(demo));
-  const sourceLive=raw.filter(item=>item.type==='continuous').reduce((sum,item)=>sum+item.duration,0),targetLive=Math.max(5000,Number(state().presentationDuration||15)*1000),liveScale=sourceLive?targetLive/sourceLive:1;
+  const sourceLive=raw.filter(item=>item.type==='continuous').reduce((sum,item)=>sum+item.duration,0),targetLive=Math.max(5000,Number(state().presentationDuration||15)*1000),liveScale=demo.preservePresentationDurations?1:(sourceLive?targetLive/sourceLive:1);
   const timeline=raw.map((item,index)=>{
     const editorial=presentationCueText(demo,app.lang,app.age,index),sourceDuration=item.duration,duration=item.role==='title'?app.meta.titleDuration*1000:item.role==='explanation'?app.meta.explanationDuration*1000:item.role==='transition'?app.meta.transitionDuration*1000:item.type==='continuous'?item.duration*liveScale:item.duration;
     return editorial?{...item,sourceDuration,duration,title:editorial.title,text:editorial.text}:{...item,sourceDuration,duration};
@@ -161,7 +161,7 @@ function makeNav(){
 function notifyControlChange(demo,key,value,values){const rebuild=demo.onControlChange?.(key,value,values);restartClock();persist();if(rebuild)buildControls();}
 function buildControls(){
   const demo=current(),values=state(),host=$('#controls');host.innerHTML='';
-  [...demo.controls,PRESENTATION_DURATION_CONTROL].forEach(c=>{
+  [...demo.controls,...(demo.presentationControls||[PRESENTATION_DURATION_CONTROL])].forEach(c=>{
     const text=controlText(demo,c,app.lang),wrap=document.createElement('div');wrap.className='control';const id=`control-${c.key}`;
     if(c.type==='toggle'){
       wrap.classList.add('switch-row');const label=document.createElement('label');label.htmlFor=id;label.textContent=text.label;
@@ -203,7 +203,7 @@ function buildMetaControls(){
 
 function updateText(){
   const demo=current(),copy=copyFor(demo),mode=app.mode==='present'?'presentation':'interactive';$('#demoCategory').textContent=demoText(demo,app.lang,'category',app.age,mode);$('#demoTitle').textContent=copy.title;
-  $('#demoSummary').textContent=demoText(demo,app.lang,'summary',app.age,mode);$('#demoHint').textContent=copy.hint;$('#presentationTitle').textContent=copy.title;$('#presentationHint').textContent=copy.hint;
+  $('#demoSummary').textContent=demoText(demo,app.lang,'summary',app.age,mode);$('#demoCredit').textContent=copy.attribution;$('#demoHint').textContent=copy.hint;$('#presentationTitle').textContent=copy.title;$('#presentationHint').textContent=copy.hint;
   $('#slideNumber').textContent=`${String(app.index+1).padStart(2,'0')} / ${String(illusions.length).padStart(2,'0')}`;$('#titleInput').value=copy.title;$('#hintInput').value=copy.hint;
 }
 function updateChrome(){
@@ -211,6 +211,7 @@ function updateChrome(){
   $('#exploreMode').textContent=uiText(app.lang,'explore');$('#presentMode').textContent=uiText(app.lang,'presentation');$('#metaMode').textContent=uiText(app.lang,'meta');$('#railLabel').textContent=uiText(app.lang,'demos');$('#tryLabel').textContent=uiText(app.lang,'tryThis');
   $('#controlsLabel').textContent=uiText(app.lang,'liveControls');$('#resetBtn').textContent=uiText(app.lang,'reset');$('#copyEditorLabel').textContent=uiText(app.lang,'presentationText');$('#titleLabel').textContent=uiText(app.lang,'title');$('#hintLabel').textContent=uiText(app.lang,'hint');
   $('#gpuLabel').textContent=uiText(app.lang,'gpu');$('#engineLabel').textContent=uiText(app.lang,'engine');$('#langBtn').textContent=app.lang==='en'?'NO':'EN';$('#langBtn').title=uiText(app.lang,'language');$('#ageBtn').textContent=uiText(app.lang,app.age);$('#ageBtn').title=uiText(app.lang,'ageTitle');$('#ageBtn').setAttribute('aria-label',uiText(app.lang,'ageTitle'));
+  $('#mainSiteLink').textContent=uiText(app.lang,'mainSite');$('#developedByLabel').textContent=uiText(app.lang,'developedBy');
   $('#settingsBtn').textContent=uiText(app.lang,'showSettings');$('#metaSettingsBtn').textContent=uiText(app.lang,'showSettings');$('#settingsTitle').textContent=uiText(app.lang,'settingsTitle');$('#settingsHelp').textContent=uiText(app.lang,'settingsHelp');$('#copySettingsBtn').textContent=uiText(app.lang,'copyJson');$('#settingsCloseBtn').textContent=uiText(app.lang,'close');$('#settingsCloseIcon').setAttribute('aria-label',uiText(app.lang,'close'));
   $('#metaEyebrow').textContent=uiText(app.lang,'presentation');$('#metaTitle').textContent=uiText(app.lang,'metaSettings');$('#metaIntro').textContent=uiText(app.lang,'metaIntro');$('#metaBrandLabel').textContent=uiText(app.lang,'brandPreview');$('#resetMetaBtn').textContent=uiText(app.lang,'resetMeta');
   $('#logoSlideTitle').textContent=uiText(app.lang,'brand');$('#logoSlideSubtitle').textContent=uiText(app.lang,'identityLab');$('#metaBrandTitle').textContent=uiText(app.lang,'brand');$('#metaBrandSubtitle').textContent=uiText(app.lang,'identityLab');setPauseLabel();

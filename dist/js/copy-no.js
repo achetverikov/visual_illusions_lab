@@ -96,7 +96,7 @@ export default {
     ]
   },
   absence:{
-    short_title:'Fraværsillusjonen',title:'Illusjonen av fravær',category:'Okklusjon',
+    short_title:'Fraværsillusjonen',title:'Fraværsillusjonen',category:'Okklusjon',
     summary:'Et bord ser først helt tomt ut bak et gitter. Når gjenstandene avsløres, virker det umulig at alle kunne ha vært der bare et øyeblikk tidligere.',
     instructions:{
       interactive:{kids:'Se på bordet bak gitteret. Ser det tomt ut? Avslør de skjulte delene. Var virkelig alle disse tingene der hele tiden?',adults:'Se på bordet bak gitteret. Virker det tomt? Avslør deretter de skjulte delene og legg merke til hvor mange gjenstander som faktisk var der hele tiden.'},
@@ -105,7 +105,7 @@ export default {
     explanation:{kids:'Gjenstandene var der hele tiden. Hjernen fyller inn den glatte bordflaten bak gitteret, slik at du ser tom plass i stedet for gjenstander som skjuler seg der.',adults:'Gjenstandene var der hele tiden. Når en del av en flate er skjult, fullfører synssystemet vanligvis flaten bak hindringen. Her fortsetter det den synlige bordflaten bak gitteret, slik at de skjulte områdene oppleves som tomt bord i stedet for steder der gjenstander kan være skjult.'},
     attribution:'Basert på arbeidet til Vebjørn Ekroll, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland).',
     presentation:[
-      {title:'Illusjonen av fravær',instruction:{kids:'',adults:''}},
+      {title:'Fraværsillusjonen',instruction:{kids:'',adults:''}},
       {title:'',instruction:{kids:'Se på bordet bak gitteret. Ser det tomt ut?',adults:'Se på bordet bak gitteret. Ser det helt tomt ut?'}},
       {title:'',instruction:{kids:'Oi – se på alle gjenstandene! Skjulte de seg virkelig der?',adults:'Se nå på gjenstandene som er avslørt. Kunne virkelig alle ha vært skjult av gitteret?'}},
       {title:'',instruction:{kids:'Se en gang til. Ja – de var der hele tiden.',adults:'Se en gang til. Gjenstandene var virkelig skjult der hele tiden.'}},

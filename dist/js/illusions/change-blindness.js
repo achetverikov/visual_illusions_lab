@@ -1,8 +1,7 @@
 import { fit, circle, canvasPoint, seeded } from '../utils.js';
 
-const defaults={ sceneTime:560, blankTime:140, revealAfter:14, blankColour:'dark', example:'tourists' };
+const defaults={ sceneTime:560, blankTime:140, revealAfter:14, blankColour:'dark', example:'tourists', presentationImages:3, guessTime:12, answerTime:4 };
 let foundUntil=0;
-const audience=(enKids,enAdults,noKids,noAdults)=>({en:{kids:enKids,adults:enAdults},no:{kids:noKids,adults:noAdults}});
 
 function cloud(ctx,x,y,s){
   ctx.fillStyle='rgba(255,255,255,.78)';
@@ -46,16 +45,14 @@ const demo={
   summary:'Authentic Rensink flicker images alternate with a brief blank. Even a large change can remain hard to spot when its local transient is removed.',
   hint:'Compare scene A and B. The blank is short—but long enough to hide the usual visual “pop”. Can you find the changing object?',
   reveal:'Without a local motion transient, attention must compare scene details across time. The feeling of a complete scene is much richer than the stored detail available for comparison.',
-  presentationMs:46000,
-  presentation:({copy})=>[
-    {duration:2500,type:'interstitial',role:'title',freeze:true,sceneAt:0,title:copy.title,text:copy.hint,credit:copy.attribution,settings:{example:'farm',revealAfter:999}},
-    {duration:12000,type:'continuous',text:copy.hint,settings:{example:'farm',revealAfter:999}},
-    {duration:5000,type:'interstitial',role:'transition',freeze:true,sceneAt:0,title:audience('Try another picture','Try another scene','Prøv et nytt bilde','Prøv et nytt motiv'),text:audience('Something else keeps changing. Can you find it?','Again, identify the region that changes across the blank.','Noe annet endrer seg hele tiden. Klarer du å finne det?','Finn igjen området som endrer seg over det tomme intervallet.'),settings:{example:'money',revealAfter:999}},
-    {duration:12000,type:'continuous',text:copy.hint,settings:{example:'money',revealAfter:999}},
-    {duration:5000,type:'interstitial',role:'transition',freeze:true,sceneAt:0,title:audience('One more picture','One final scene','Ett bilde til','Et siste motiv'),text:audience('Watch carefully—what disappears or appears?','Search the scene systematically and compare across the blank.','Se nøye – hva forsvinner eller dukker opp?','Søk systematisk gjennom motivet og sammenlign over det tomme intervallet.'),settings:{example:'tourists',revealAfter:999}},
-    {duration:12000,type:'continuous',text:copy.hint,settings:{example:'tourists',revealAfter:999}},
-    {duration:3500,type:'interstitial',role:'explanation',freeze:true,sceneAt:12000,title:{en:'What happened',no:'Hva skjedde?'},text:copy.reveal,settings:{example:'tourists',revealAfter:999}}
-  ],
+  preservePresentationDurations:true,
+  presentation:({state,copy})=>{
+    const examples=['farm','money','tourists','airplane','chopper','dinner'].slice(0,state.presentationImages);
+    return examples.flatMap((example,index)=>[
+      {duration:state.guessTime*1000,type:'continuous',text:copy.hint,credit:index===0?copy.attribution:'',settings:{example,revealAfter:999}},
+      {duration:state.answerTime*1000,type:'continuous',text:{en:'Solution',no:'Løsning'},settings:{example,revealAfter:0}}
+    ]);
+  },
   defaults,
   controls:[
     {key:'sceneTime',label:'Image duration',type:'range',min:180,max:1200,step:20,format:v=>`${v} ms`},
@@ -63,6 +60,11 @@ const demo={
     {key:'revealAfter',label:'Reveal answer after',type:'range',min:5,max:25,step:1,format:v=>`${v} s`},
     {key:'example',label:'Rensink example',type:'select',options:[['airplane','Airplane'],['farm','Farm'],['tourists','Tourists'],['chopper','Chopper & truck'],['dinner','Dinner'],['money','Money']]},
     {key:'blankColour',label:'Blank screen',type:'select',options:[['dark','Dark'],['light','Light']]}
+  ],
+  presentationControls:[
+    {key:'presentationImages',label:'Images in presentation',type:'range',min:1,max:6,step:1,format:v=>String(v)},
+    {key:'guessTime',label:'Guess time per image',type:'range',min:3,max:30,step:1,format:v=>`${v} s`},
+    {key:'answerTime',label:'Answer time per image',type:'range',min:1,max:15,step:1,format:v=>`${v} s`}
   ],
   draw(ctx,canvas,t,state){
     fit(ctx,canvas);const period=state.sceneTime*2+state.blankTime*2,local=t%period;let changed=false,blank=false;

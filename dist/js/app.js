@@ -1,9 +1,10 @@
 import illusions from './illusions/index.js?v=19';
 import { createPixiStimuli } from './pixi-scenes.js?v=19';
-import { uiText, demoText, controlText, presentationCueText } from './i18n.js?v=19';
+import { uiText, demoText, controlText, presentationCueText } from './i18n.js?v=20';
 
 const $=sel=>document.querySelector(sel);
 const storageKey='visual-illusions-lab-v5',legacyKey='visual-illusions-lab-v4',cookiePrefix='vil_settings_v1_';
+const helpStorageKey='visual-illusions-help-seen-v1';
 const META_DEFAULTS={captionHeight:132,tipFont:20,titleFont:34,supportFont:18,creditFont:12,titleDuration:10,explanationDuration:10,transitionDuration:5,logoEvery:4,logoDuration:10,logoWidth:76};
 const META_CONTROLS=[
   {key:'tipFont',label:'tipFont',min:14,max:34,step:1},
@@ -207,14 +208,15 @@ function updateText(){
   $('#slideNumber').textContent=`${String(app.index+1).padStart(2,'0')} / ${String(illusions.length).padStart(2,'0')}`;$('#titleInput').value=copy.title;$('#hintInput').value=copy.hint;
 }
 function updateChrome(){
-  document.documentElement.lang=app.lang==='no'?'nb':'en';$('#brandTitle').textContent=uiText(app.lang,'brand');$('#brandSubtitle').textContent=uiText(app.lang,'lab');
+  document.documentElement.lang=app.lang==='no'?'nb':'en';$('#brandTitle').textContent=uiText(app.lang,'brand');
   $('#exploreMode').textContent=uiText(app.lang,'explore');$('#presentMode').textContent=uiText(app.lang,'presentation');$('#metaMode').textContent=uiText(app.lang,'meta');$('#railLabel').textContent=uiText(app.lang,'demos');$('#tryLabel').textContent=uiText(app.lang,'tryThis');
   $('#controlsLabel').textContent=uiText(app.lang,'liveControls');$('#resetBtn').textContent=uiText(app.lang,'reset');$('#copyEditorLabel').textContent=uiText(app.lang,'presentationText');$('#titleLabel').textContent=uiText(app.lang,'title');$('#hintLabel').textContent=uiText(app.lang,'hint');
   $('#gpuLabel').textContent=uiText(app.lang,'gpu');$('#engineLabel').textContent=uiText(app.lang,'engine');$('#langBtn').textContent=app.lang==='en'?'NO':'EN';$('#langBtn').title=uiText(app.lang,'language');$('#ageBtn').textContent=uiText(app.lang,app.age);$('#ageBtn').title=uiText(app.lang,'ageTitle');$('#ageBtn').setAttribute('aria-label',uiText(app.lang,'ageTitle'));
-  $('#mainSiteLink').textContent=uiText(app.lang,'mainSite');$('#developedByLabel').textContent=uiText(app.lang,'developedBy');
+  $('#headerMainSiteLinkLabel').textContent=uiText(app.lang,'mainSite');$('#headerMainSiteLink').setAttribute('aria-label',uiText(app.lang,'mainSite'));
   $('#settingsBtn').textContent=uiText(app.lang,'showSettings');$('#metaSettingsBtn').textContent=uiText(app.lang,'showSettings');$('#settingsTitle').textContent=uiText(app.lang,'settingsTitle');$('#settingsHelp').textContent=uiText(app.lang,'settingsHelp');$('#copySettingsBtn').textContent=uiText(app.lang,'copyJson');$('#settingsCloseBtn').textContent=uiText(app.lang,'close');$('#settingsCloseIcon').setAttribute('aria-label',uiText(app.lang,'close'));
   $('#metaEyebrow').textContent=uiText(app.lang,'presentation');$('#metaTitle').textContent=uiText(app.lang,'metaSettings');$('#metaIntro').textContent=uiText(app.lang,'metaIntro');$('#metaBrandLabel').textContent=uiText(app.lang,'brandPreview');$('#resetMetaBtn').textContent=uiText(app.lang,'resetMeta');
-  $('#logoSlideTitle').textContent=uiText(app.lang,'brand');$('#logoSlideSubtitle').textContent=uiText(app.lang,'identityLab');$('#metaBrandTitle').textContent=uiText(app.lang,'brand');$('#metaBrandSubtitle').textContent=uiText(app.lang,'identityLab');setPauseLabel();
+  $('#logoSlideTitle').textContent=uiText(app.lang,'brand');$('#logoSlideSubtitle').textContent=uiText(app.lang,'identityLab');$('#metaBrandTitle').textContent=uiText(app.lang,'brand');$('#metaBrandSubtitle').textContent=uiText(app.lang,'identityLab');
+  ['brandDeveloperLabel','logoSlideDeveloperLabel','metaBrandDeveloperLabel'].forEach(id=>$(`#${id}`).textContent=uiText(app.lang,'developedBy'));$('#exitFullscreenLabel').textContent=uiText(app.lang,'exitFullscreen');$('#exitFullscreenBtn').setAttribute('aria-label',uiText(app.lang,'exitFullscreen'));$('#helpBtn').setAttribute('aria-label',uiText(app.lang,'help'));$('#helpBtn').title=uiText(app.lang,'help');$('#helpOverlay').setAttribute('aria-label',uiText(app.lang,'helpTitle'));$('#helpDismiss').textContent=uiText(app.lang,'helpDismiss');setPauseLabel();
 }
 function updateNav(){document.querySelectorAll('.nav-item').forEach((el,i)=>{el.classList.toggle('is-active',i===app.index);el.setAttribute('aria-current',i===app.index?'true':'false');});}
 function refreshLanguage(){updateChrome();makeNav();updateNav();buildControls();buildMetaControls();updateText();persist();}
@@ -229,6 +231,32 @@ function setMode(mode){
 function setPauseLabel(){const label=uiText(app.lang,app.paused?'resume':'pause');$('#pauseBtn').setAttribute('aria-label',label);$('#pauseBtn').title=label;}
 function togglePause(){if(app.paused){app.started=performance.now()-app.pausedElapsed;app.paused=false;}else{app.pausedElapsed=performance.now()-app.started;app.paused=true;}$('#pauseBtn').classList.toggle('is-paused',app.paused);setPauseLabel();}
 async function toggleFullscreen(){try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}catch{}}
+async function exitPresentationFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();}catch{}setMode('explore');}
+
+const HELP_ITEMS=[
+  {target:'#presentMode',key:'helpPresentation',placement:'below'},
+  {target:'.demo-rail',key:'helpDemos',placement:'right'},
+  {target:'#stageFrame',key:'helpStage',placement:'inside'},
+  {target:'#controlPanel',key:'helpControls',placement:'left'},
+  {target:'#ageBtn',key:'helpAudience',placement:'below'}
+];
+function helpPosition(rect,placement,width,height){
+  const gap=26,pad=14,vw=innerWidth,vh=innerHeight;let left=rect.left+(rect.width-width)/2,top=rect.bottom+gap;
+  if(placement==='right'){left=rect.right+gap;top=rect.top+Math.min(110,Math.max(8,rect.height*.18));}
+  else if(placement==='left'){left=rect.left-width-gap;top=rect.top+Math.min(150,Math.max(8,rect.height*.2));}
+  else if(placement==='inside'){left=rect.left+24;top=rect.bottom-height-24;}
+  left=Math.max(pad,Math.min(vw-width-pad,left));top=Math.max(82,Math.min(vh-height-58,top));return {left,top};
+}
+function renderHelp(){
+  const overlay=$('#helpOverlay');if(overlay.hidden)return;const callouts=$('#helpCallouts'),highlights=$('#helpHighlights'),lines=$('#helpArrowLines');callouts.replaceChildren();highlights.replaceChildren();lines.replaceChildren();const rendered=[];
+  HELP_ITEMS.forEach((item,index)=>{const target=$(item.target);if(!target)return;const rect=target.getBoundingClientRect(),style=getComputedStyle(target);if(style.display==='none'||rect.width<2||rect.height<2||rect.bottom<0||rect.top>innerHeight)return;
+    const highlight=document.createElement('div');highlight.className='help-highlight';Object.assign(highlight.style,{left:`${Math.max(4,rect.left-5)}px`,top:`${Math.max(4,rect.top-5)}px`,width:`${Math.min(innerWidth-8,rect.width+10)}px`,height:`${Math.min(innerHeight-8,rect.height+10)}px`});highlights.appendChild(highlight);
+    const callout=document.createElement('div');callout.className='help-callout';callout.innerHTML=`<b>${index+1}</b>${uiText(app.lang,item.key)}`;callouts.appendChild(callout);const pos=helpPosition(rect,item.placement,callout.offsetWidth,callout.offsetHeight);Object.assign(callout.style,{left:`${pos.left}px`,top:`${pos.top}px`});rendered.push({target:rect,callout});
+  });
+  const ns='http://www.w3.org/2000/svg';rendered.forEach(({target,callout})=>{const box=callout.getBoundingClientRect(),tx=target.left+target.width/2,ty=target.top+target.height/2,cx=box.left+box.width/2,cy=box.top+box.height/2,line=document.createElementNS(ns,'line');line.setAttribute('x1',String(Math.max(box.left,Math.min(box.right,tx))));line.setAttribute('y1',String(Math.max(box.top,Math.min(box.bottom,ty))));line.setAttribute('x2',String(Math.max(target.left,Math.min(target.right,cx))));line.setAttribute('y2',String(Math.max(target.top,Math.min(target.bottom,cy))));lines.appendChild(line);});
+}
+function openHelp(){if(app.mode!=='explore')setMode('explore');const overlay=$('#helpOverlay');overlay.hidden=false;try{localStorage.setItem(helpStorageKey,'1');}catch{}requestAnimationFrame(renderHelp);}
+function closeHelp(){const overlay=$('#helpOverlay');overlay.hidden=true;$('#helpCallouts').replaceChildren();$('#helpHighlights').replaceChildren();$('#helpArrowLines').replaceChildren();}
 
 function updatePresentation(t,demo,result){
   const cue=presentationAt(t,demo),total=cue?.total||demo.presentationMs,p=Math.min(1,t/total),copy=$('#presentationCopy'),logo=$('#presentationLogo');$('#presentationProgress').style.width=`${p*100}%`;
@@ -262,11 +290,12 @@ async function copySettings(){
 }
 function bindUI(){
   document.querySelectorAll('.mode-btn').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
-  $('#pauseBtn').addEventListener('click',togglePause);$('#fullscreenBtn').addEventListener('click',toggleFullscreen);$('#langBtn').addEventListener('click',()=>{app.lang=app.lang==='en'?'no':'en';refreshLanguage();});$('#ageBtn').addEventListener('click',()=>{app.age=app.age==='adults'?'kids':'adults';refreshLanguage();restartClock();});
+  $('#pauseBtn').addEventListener('click',togglePause);$('#fullscreenBtn').addEventListener('click',toggleFullscreen);$('#exitFullscreenBtn').addEventListener('click',exitPresentationFullscreen);$('#helpBtn').addEventListener('click',openHelp);$('#helpOverlay').addEventListener('click',closeHelp);$('#langBtn').addEventListener('click',()=>{app.lang=app.lang==='en'?'no':'en';refreshLanguage();});$('#ageBtn').addEventListener('click',()=>{app.age=app.age==='adults'?'kids':'adults';refreshLanguage();restartClock();});
   $('#resetBtn').addEventListener('click',()=>{app.states[current().id]={...current().defaults,presentationDuration:LIVE_DURATION_DEFAULTS[current().id]??15};restartClock();buildControls();persist();});$('#titleInput').addEventListener('input',e=>editCopy('title',e.target.value));$('#hintInput').addEventListener('input',e=>editCopy('hint',e.target.value));
   $('#resetMetaBtn').addEventListener('click',()=>{app.meta={...META_DEFAULTS};applyMetaSettings();buildMetaControls();persist();});
   $('#settingsBtn').addEventListener('click',openSettings);$('#metaSettingsBtn').addEventListener('click',openSettings);$('#copySettingsBtn').addEventListener('click',copySettings);$('#settingsCloseBtn').addEventListener('click',()=>$('#settingsDialog').close());$('#settingsCloseIcon').addEventListener('click',()=>$('#settingsDialog').close());
-  document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName))return;if(app.mode==='meta'&&e.key!=='Escape'&&e.key.toLowerCase()!=='p')return;if(e.key==='ArrowRight')next();else if(e.key==='ArrowLeft')prev();else if(e.key===' '){e.preventDefault();togglePause();}else if(e.key.toLowerCase()==='f')toggleFullscreen();else if(e.key.toLowerCase()==='p')setMode(app.mode==='present'?'explore':'present');else if(e.key==='Escape'&&app.mode!=='explore')setMode('explore');});
+  document.addEventListener('keydown',e=>{if(!$('#helpOverlay').hidden){if(e.key==='Escape')closeHelp();return;}if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName))return;if(app.mode==='meta'&&e.key!=='Escape'&&e.key.toLowerCase()!=='p')return;if(e.key==='ArrowRight')next();else if(e.key==='ArrowLeft')prev();else if(e.key===' '){e.preventDefault();togglePause();}else if(e.key.toLowerCase()==='f')toggleFullscreen();else if(e.key.toLowerCase()==='p')setMode(app.mode==='present'?'explore':'present');else if(e.key==='Escape'&&app.mode!=='explore')setMode('explore');});
+  window.addEventListener('resize',()=>{if(!$('#helpOverlay').hidden)requestAnimationFrame(renderHelp);});
 }
 
 async function startEngine(){
@@ -277,5 +306,6 @@ async function startEngine(){
 }
 
 updateChrome();makeNav();bindUI();updateNav();buildControls();buildMetaControls();updateText();applyMetaSettings();applyPresentationTheme();persist();
+requestAnimationFrame(()=>requestAnimationFrame(()=>{try{if(!localStorage.getItem(helpStorageKey))openHelp();}catch{openHelp();}}));
 startEngine().catch(err=>{const host=$('#jspsych-target');host.innerHTML=`<div style="display:grid;place-items:center;height:100%;padding:2rem;text-align:center;color:#ffcf5a">${err.message}</div>`;console.error(err);});
 window.addEventListener('beforeunload',()=>app.pixi?.destroy(true,{children:true,texture:true}));

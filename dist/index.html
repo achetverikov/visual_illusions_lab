@@ -8,14 +8,14 @@
   <title>Visual Illusions Lab</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23ffcf5a' stroke-width='7'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%2374e0ff'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="./vendor/jspsych.css">
-  <link rel="stylesheet" href="./styles.css?v=19">
+  <link rel="stylesheet" href="./styles.css?v=20">
 </head>
 <body>
   <div class="app-shell" id="app">
     <header class="topbar">
       <div class="brand" aria-label="Visual Illusions Lab">
         <span class="brand-mark" aria-hidden="true"><i></i></span>
-        <span><b id="brandTitle">Visual Illusions</b><small id="brandSubtitle">DICE Lab</small></span>
+        <span><b id="brandTitle">Visual Illusions</b><small><span id="brandDeveloperLabel">Developed by</span> <a href="https://andreychetverikov.org/" target="_blank" rel="noopener">Andrey Chetverikov</a></small></span>
       </div>
       <div class="mode-switch" role="tablist" aria-label="App mode">
         <button class="mode-btn is-active" id="exploreMode" data-mode="explore" role="tab" aria-selected="true">Explore</button>
@@ -23,6 +23,7 @@
         <button class="mode-btn" id="metaMode" data-mode="meta" role="tab" aria-selected="false">Meta</button>
       </div>
       <div class="top-actions">
+        <a class="main-site-link" id="headerMainSiteLink" href="https://andreychetverikov.org/" target="_blank" rel="noopener"><span aria-hidden="true">↗</span><span id="headerMainSiteLinkLabel">Main site</span></a>
         <button class="lang-btn" id="ageBtn" aria-label="Audience age">Adults</button>
         <button class="lang-btn" id="langBtn" aria-label="Change language">NO</button>
         <button class="icon-btn" id="pauseBtn" aria-label="Pause animation" title="Pause animation">
@@ -31,6 +32,7 @@
         <button class="icon-btn" id="fullscreenBtn" aria-label="Enter fullscreen" title="Fullscreen">
           <span class="fullscreen-icon" aria-hidden="true"></span>
         </button>
+        <button class="icon-btn help-btn" id="helpBtn" aria-label="Help" title="Help"><span aria-hidden="true">?</span></button>
       </div>
     </header>
 
@@ -55,8 +57,10 @@
               <h1 id="logoSlideTitle">Visual Illusions</h1>
               <img src="./assets/isp.svg" alt="Institute for Social and Personality Psychology, University of Bergen">
               <p id="logoSlideSubtitle">Bergen Laboratory for the Study of Decision, Intuition, Consciousness, and Emotion (DICE)</p>
+              <p class="developer-credit"><span id="logoSlideDeveloperLabel">Developed by</span> <a href="https://andreychetverikov.org/">Andrey Chetverikov</a></p>
             </div>
           </div>
+          <button class="exit-fullscreen-btn" id="exitFullscreenBtn"><span aria-hidden="true">×</span><span id="exitFullscreenLabel">Exit full screen</span></button>
           <div class="stage-status">
             <span class="live-dot" aria-hidden="true"></span>
             <span id="statusText">LIVE CANVAS</span>
@@ -93,10 +97,6 @@
           <span class="engine-glyph" aria-hidden="true">⌁</span>
           <p><b id="gpuLabel">GPU rendered</b><br><span id="engineLabel">jsPsych Psychophysics + PIXI/WebGL</span></p>
         </div>
-        <div class="site-credit">
-          <a href="https://andreychetverikov.org/" id="mainSiteLink">Main site</a>
-          <span><span id="developedByLabel">Developed by</span> <a href="https://andreychetverikov.org/">Andrey Chetverikov</a></span>
-        </div>
       </aside>
     </main>
 
@@ -111,6 +111,7 @@
             <h2 id="metaBrandTitle">Visual Illusions</h2>
             <img src="./assets/isp.svg" alt="Institute for Social and Personality Psychology, University of Bergen">
             <p id="metaBrandSubtitle">Bergen Laboratory for the Study of Decision, Intuition, Consciousness, and Emotion (DICE)</p>
+            <p class="developer-credit"><span id="metaBrandDeveloperLabel">Developed by</span> <a href="https://andreychetverikov.org/">Andrey Chetverikov</a></p>
           </div>
         </section>
         <div class="meta-controls" id="metaControls"></div>
@@ -123,6 +124,16 @@
 
   </div>
 
+  <div class="help-overlay" id="helpOverlay" role="dialog" aria-modal="true" aria-label="Interactive mode tour" hidden>
+    <svg class="help-arrows" aria-hidden="true">
+      <defs><marker id="helpArrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z"></path></marker></defs>
+      <g id="helpArrowLines"></g>
+    </svg>
+    <div id="helpHighlights"></div>
+    <div id="helpCallouts"></div>
+    <p class="help-dismiss" id="helpDismiss">Click anywhere or press Esc to close</p>
+  </div>
+
   <dialog class="settings-dialog" id="settingsDialog">
     <div class="dialog-head"><h2 id="settingsTitle">Current saved settings</h2><button id="settingsCloseIcon" aria-label="Close">×</button></div>
     <p id="settingsHelp">Copy this JSON and send it to update the defaults.</p>
@@ -133,6 +144,6 @@
   <script src="./vendor/pixi-8.13.2.min.js"></script>
   <script src="./vendor/jspsych-8.3.0.min.js"></script>
   <script src="./vendor/jspsych-psychophysics-5.1.0.min.js"></script>
-  <script type="module" src="./js/app.js?v=19"></script>
+  <script type="module" src="./js/app.js?v=20"></script>
 </body>
 </html>

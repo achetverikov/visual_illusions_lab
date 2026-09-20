@@ -39,4 +39,5 @@ export default {
     else Object.assign(state,{count:5,motionDirection:90,innerDirection:0});
     return true;
   },
-  draw(){retu
+  draw(){return {phase:'FIXATE LEFT',progress:0};}
+};

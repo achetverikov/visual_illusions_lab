@@ -27,4 +27,4 @@ Each demonstration has its own state and controls. jspsych-psychophysics receive
 - Space: pause / resume
 - P: presentation / explore mode
 - F: fullscreen
-- Esc
+- Escape: leave presentation mode

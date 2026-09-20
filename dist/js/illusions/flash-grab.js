@@ -18,4 +18,5 @@ export default{
     {key:'blankDuringFlash',label:'Hide motion at flash',type:'toggle'},
     {key:'fixation',label:'Fixation points',type:'toggle'}
   ],
-  draw(){return {phase:'ROTATIN
+  draw(){return {phase:'ROTATING',progress:0};}
+};

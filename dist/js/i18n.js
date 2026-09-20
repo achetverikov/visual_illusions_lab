@@ -38,4 +38,6 @@ export function controlText(demo,control,lang){
   if(control.key==='presentationDuration')return {label:lang==='no'?'Visningstid i presentasjonen':control.label,options:control.options};
   if(lang!=='no')return {label:control.label,options:control.options};
   const tr=DEMO_NO[demo.id]||{},label=tr.controls?.[control.key]||control.label;
-  const options=control.options?.map(([value,text])=>[value,tr.options?.[control.key]?.[valu
+  const options=control.options?.map(([value,text])=>[value,tr.options?.[control.key]?.[value]||text]);
+  return {label,options};
+}

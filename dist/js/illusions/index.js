@@ -10,4 +10,4 @@ import absence from './absence.js?v=18';
 import flashGrab from './flash-grab.js?v=17';
 import breathingSquare from './breathing-square.js?v=17';
 
-export default [stonehenge,vanLier,steppingFeet,infiniteRegress,lilacChaser,motionSilencing,changeBlindness,pacman,absence,flashGrab,breath
+export default [stonehenge,vanLier,steppingFeet,infiniteRegress,lilacChaser,motionSilencing,changeBlindness,pacman,absence,flashGrab,breathingSquare];

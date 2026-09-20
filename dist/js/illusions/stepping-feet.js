@@ -48,4 +48,6 @@ export default {
     ctx.fillStyle=state.mode==='mono'?'#f2f2f2':'#f7f700';ctx.fillRect(x,y1-height/2,topWidth,height);
     ctx.fillStyle=state.mode==='mono'?'#0c0c0c':'#0000a5';ctx.fillRect(x,y2-height/2,bottomWidth,height);
     circle(ctx,600,66,13,'#e5232f');
-    return {phase:state.mode==='worms'?`${units} BARS — WORMS`:state.mode==='low'?'LOW CONTRAST':state.mode==='mono'?'BLACK + WHITE':`${units
+    return {phase:state.mode==='worms'?`${units} BARS — WORMS`:state.mode==='low'?'LOW CONTRAST':state.mode==='mono'?'BLACK + WHITE':`${units} BARS — STEP`,progress:distance/cycle};
+  }
+};

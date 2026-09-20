@@ -203,4 +203,7 @@ textarea { resize: vertical; line-height: 1.4; }
   .presentation-copy { left: 4%; bottom: 6%; width: 78%; }
   .presentation-copy.cue-interstitial, .presentation-copy.cue-pause { width: 100%; }
   .meta-settings { padding: 18px 12px; }
-  .meta-actions { flex-direction
+  .meta-actions { flex-direction: column; }
+  .meta-actions .settings-btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

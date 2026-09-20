@@ -38,4 +38,6 @@ export default {
       circle(ctx,600+Math.cos(a)*r,338+Math.sin(a)*r,state.dotSize,hsl(hue,100,52));
     }
     circle(ctx,600,338,4,'#fff');
-    return {phase:moving?(segment%2?'COUNTERCLOCKWISE':'CLOCKWISE'):'STILL',progress:state.compa
+    return {phase:moving?(segment%2?'COUNTERCLOCKWISE':'CLOCKWISE'):'STILL',progress:state.compare?local/cycle:(t%10000)/10000};
+  }
+};

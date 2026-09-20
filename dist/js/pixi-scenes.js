@@ -490,4 +490,14 @@ export async function createPixiStimuli(illusions,runtime){
 
   // Keep PIXI display trees out of jsPsych's trial parameters. Display trees
   // contain parent/child cycles, and Firefox can overflow while jsPsych
-  // recur
+  // recursively resolves dynamic parameters. Each illusion instead gets a
+  // plain built-in psychophysics stimulus that drives its persistent scene.
+  return scenes.map(item=>({
+    obj_type:'rect',startX:-1000,startY:-1000,width:1,height:1,fill_color:'#000000',
+    change_attr(){
+      const active=runtime.current().id===item.id;
+      item.root.visible=active;
+      if(active)runtime.frame(item.update(runtime.sceneElapsed?.()??runtime.elapsed(),runtime.state(),item.root)||{});
+    }
+  }));
+}

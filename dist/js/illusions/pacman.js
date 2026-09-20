@@ -78,4 +78,5 @@ export default {
     if(reveal){ctx.strokeStyle='#ff4f70';ctx.lineWidth=7;ctx.setLineDash([12,9]);ctx.strokeRect(target.x,target.y,target.w,target.h);ctx.setLineDash([]);}
     return {phase:reveal?'ANSWER':changed?'MAZE B':'MAZE A',progress:p.progress};
   },
-  onPointer(event,canvas){const p=canvasPoint(event,canvas);if(p.x>target.x-35&&p.x<target.x+target.w+35&&p.y>target.y-35&&p.y<target.
+  onPointer(event,canvas){const p=canvasPoint(event,canvas);if(p.x>target.x-35&&p.x<target.x+target.w+35&&p.y>target.y-35&&p.y<target.y+target.h+35){foundUntil=performance.now()+3500;return true;}return false;}
+};

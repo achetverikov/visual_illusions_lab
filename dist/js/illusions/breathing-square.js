@@ -17,4 +17,5 @@ export default{
     {key:'coverHue',label:'Occluder hue',type:'range',min:0,max:70,step:1,format:v=>`${v}°`},
     {key:'rotation',label:'Rotate square',type:'toggle'}
   ],
-  draw(){return {phase:'RIGID ROTATION
+  draw(){return {phase:'RIGID ROTATION',progress:0};}
+};

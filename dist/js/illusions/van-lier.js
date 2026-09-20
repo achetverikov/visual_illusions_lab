@@ -45,4 +45,6 @@ export default {
     const local=state.auto?t%cycle:Math.min(t,cycle-1),adapting=local<filledMs,swapped=local>=filledMs+contourMs;
     adapting?colouredPair(ctx,state):outlinePair(ctx,state.lineWidth,swapped);
     if(state.fixation)circle(ctx,600,338,4,'#181818');
-    return {phase:adapting?'COLOUR':swapped?'CONTOU
+    return {phase:adapting?'COLOUR':swapped?'CONTOUR 2':'CONTOUR 1',progress:local/cycle};
+  }
+};

@@ -276,4 +276,5 @@ async function startEngine(){
 }
 
 updateChrome();makeNav();bindUI();updateNav();buildControls();buildMetaControls();updateText();applyMetaSettings();applyPresentationTheme();persist();
-startEngine().catch(err=>{const host=$('#
+startEngine().catch(err=>{const host=$('#jspsych-target');host.innerHTML=`<div style="display:grid;place-items:center;height:100%;padding:2rem;text-align:center;color:#ffcf5a">${err.message}</div>`;console.error(err);});
+window.addEventListener('beforeunload',()=>app.pixi?.destroy(true,{children:true,texture:true}));

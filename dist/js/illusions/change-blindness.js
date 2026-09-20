@@ -72,4 +72,6 @@ const demo={
     if(reveal&&!blank){const q=targetFor(state);ctx.strokeStyle='#ff405d';ctx.lineWidth=8;ctx.setLineDash([13,10]);ctx.strokeRect(q.x,q.y,q.w,q.h);ctx.setLineDash([]);}
     return {phase:reveal?'ANSWER':blank?'BLANK':changed?'SCENE B':'SCENE A',progress:(t%(state.revealAfter*1000))/(state.revealAfter*1000)};
   },
-  onPointer(event,canvas,state){const p=canvasPoint(event,canvas),q=targetFor(state);if(p.x>q.x-25&&p.x<q.x+q.w+25&&p.y>q.y-25&&p.y<q.y+q.h+25){foundUntil=p
+  onPointer(event,canvas,state){const p=canvasPoint(event,canvas),q=targetFor(state);if(p.x>q.x-25&&p.x<q.x+q.w+25&&p.y>q.y-25&&p.y<q.y+q.h+25){foundUntil=performance.now()+3500;return true;}return false;}
+};
+export default demo;

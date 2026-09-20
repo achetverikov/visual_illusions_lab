@@ -40,4 +40,6 @@ export default {
     const a=state.empty*1000,b=state.reveal*1000,c=state.verify*1000,cycle=a+b+c,local=state.auto?t%cycle:Math.min(t,cycle-1);
     const phase=local<a?0:local<a+b?1:2,verifyObjects=phase===2&&Math.floor((local-a-b)/500)%2===1;
     drawContained(ctx,phase===1||verifyObjects?visible:occluded);
-    return {phase:phase===0?'EMPTY TABLE?':phase===1?'REVEAL':
+    return {phase:phase===0?'EMPTY TABLE?':phase===1?'REVEAL':'TRY AGAIN',progress:local/cycle};
+  }
+};

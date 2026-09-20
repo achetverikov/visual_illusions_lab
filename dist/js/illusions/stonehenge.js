@@ -63,4 +63,6 @@ export default{
   draw(ctx,canvas,t,state){
     fit(ctx,canvas);const cycle=(state.adapt+state.reveal)*1000,local=state.auto?t%cycle:Math.min(t,cycle-1),grey=local>=state.adapt*1000;
     drawBase(ctx);if(!grey)colourise(ctx,state.hueShift,state.saturation);if(state.fixation)drawFixation(ctx,600,338,10,'#171717',true);
-    retur
+    return {phase:grey?'AFTERIMAGE':'ADAPT',progress:local/cycle};
+  }
+};

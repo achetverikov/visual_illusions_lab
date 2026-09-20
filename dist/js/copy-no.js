@@ -130,4 +130,6 @@ export default {
       presentation:{kids:'Se på det blå kvadratet mellom de oransje formene. Holder det samme størrelse og form, eller ser det ut til å bli større og mindre?',adults:'Se på det blå kvadratet mellom de oransje formene. Legg merke til om det ser ut til å beholde samme størrelse og form mens det roterer.'}
     },
     explanation:{kids:'Det blå kvadratet endrer aldri størrelse eller form. De oransje formene skjuler deler av kantene, og hjernen må finne ut hvordan de skjulte delene henger sammen. Derfor kan kvadratet se ut til å vokse og krympe.',adults:'Det blå kvadratet endrer aldri størrelse eller form. Okklusjonen skjuler store deler av kanten, slik at bare separate kantfragmenter i bevegelse er synlige. Synssystemet må tolke hvordan fragmentene tilhører ett objekt, og denne bevegelsesinformasjonen er tvetydig. Derfor kan det stive kvadratet se ut til å vokse, krympe eller bøye seg mens det roterer.'},
-    attribution:'Basert på demons
+    attribution:'Basert på demonstrasjonen til Michael Bach (University of Freiburg, Tyskland), som bygger på arbeid av Shiffrar, Pavel, Bruno og kolleger.'
+  }
+};

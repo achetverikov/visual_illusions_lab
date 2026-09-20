@@ -90,4 +90,7 @@ export function canvasPoint(event, canvas, virtualW = 1200, virtualH = 675) {
   const px = (event.clientX - rect.left) * canvas.width / rect.width;
   const py = (event.clientY - rect.top) * canvas.height / rect.height;
   const s = Math.min(canvas.width/virtualW, canvas.height/virtualH);
-  return { x: (px-(canvas.width-virtualW*s)/2)/s, y: (py-(canvas.height-virtualH*s)/2)/s
+  return { x: (px-(canvas.width-virtualW*s)/2)/s, y: (py-(canvas.height-virtualH*s)/2)/s };
+}
+
+export function formatSeconds(v) { return `${Number(v).toFixed(v % 1 ? 1 : 0)} s`; }

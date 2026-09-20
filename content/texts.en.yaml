@@ -464,4 +464,10 @@ demos:
         brain has to work out how the hidden parts fit together. This can make the square seem to grow and
         shrink.
       adults: >-
-        The blue square never changes its size or shape. Occlusion hide
+        The blue square never changes its size or shape. Occlusion hides much of its boundary, leaving only separate
+        moving edge fragments visible. The visual system has to infer how those fragments belong to one object, and that
+        motion information is ambiguous. As a result, the rigid square can appear to grow, shrink, or bend as it
+        rotates.
+    attribution: >-
+      Based on the demonstration by Michael Bach (University of Freiburg, Germany), drawing on work by Shiffrar, Pavel, Bruno,
+      and colleagues.

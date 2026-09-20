@@ -34,4 +34,6 @@ export default {
       softDot(ctx,600+Math.cos(a)*state.radius,338+Math.sin(a)*state.radius,state.sigma,state.sigma*2,state.colour);
     }
     if(state.fixation)circle(ctx,600,338,4,'#202020');
-    return {phase:'FIXATE
+    return {phase:'FIXATE',progress:(t%24000)/24000};
+  }
+};

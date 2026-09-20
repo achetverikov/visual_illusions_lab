@@ -234,11 +234,11 @@ async function toggleFullscreen(){try{if(!document.fullscreenElement)await docum
 async function exitPresentationFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();}catch{}setMode('explore');}
 
 const HELP_ITEMS=[
-  {target:'#presentMode',key:'helpPresentation',placement:'below'},
-  {target:'.demo-rail',key:'helpDemos',placement:'right'},
-  {target:'#stageFrame',key:'helpStage',placement:'inside'},
-  {target:'#controlPanel',key:'helpControls',placement:'left'},
-  {target:'#ageBtn',key:'helpAudience',placement:'below'}
+  {target:'#presentMode',key:'helpPresentation',placement:'below',from:'top',to:[.5,1]},
+  {target:'.demo-rail',key:'helpDemos',placement:'right',from:'left',to:[1,.28]},
+  {target:'#stageFrame',key:'helpStage',placement:'inside',from:'topRight',to:[.34,.66]},
+  {target:'#controlPanel',key:'helpControls',placement:'left',from:'right',to:[0,.32]},
+  {target:'#ageBtn',key:'helpAudience',placement:'below',from:'top',to:[.5,1]}
 ];
 function helpPosition(rect,placement,width,height){
   const gap=26,pad=14,vw=innerWidth,vh=innerHeight;let left=rect.left+(rect.width-width)/2,top=rect.bottom+gap;
@@ -247,13 +247,16 @@ function helpPosition(rect,placement,width,height){
   else if(placement==='inside'){left=rect.left+24;top=rect.bottom-height-24;}
   left=Math.max(pad,Math.min(vw-width-pad,left));top=Math.max(82,Math.min(vh-height-58,top));return {left,top};
 }
+function anchorPoint(rect,anchor){
+  if(anchor==='top')return {x:rect.left+rect.width/2,y:rect.top};if(anchor==='topRight')return {x:rect.right-8,y:rect.top};if(anchor==='left')return {x:rect.left,y:rect.top+rect.height/2};if(anchor==='right')return {x:rect.right,y:rect.top+rect.height/2};return {x:rect.left+rect.width/2,y:rect.top+rect.height/2};
+}
 function renderHelp(){
   const overlay=$('#helpOverlay');if(overlay.hidden)return;const callouts=$('#helpCallouts'),highlights=$('#helpHighlights'),lines=$('#helpArrowLines');callouts.replaceChildren();highlights.replaceChildren();lines.replaceChildren();const rendered=[];
-  HELP_ITEMS.forEach((item,index)=>{const target=$(item.target);if(!target)return;const rect=target.getBoundingClientRect(),style=getComputedStyle(target);if(style.display==='none'||rect.width<2||rect.height<2||rect.bottom<0||rect.top>innerHeight)return;
-    const highlight=document.createElement('div');highlight.className='help-highlight';Object.assign(highlight.style,{left:`${Math.max(4,rect.left-5)}px`,top:`${Math.max(4,rect.top-5)}px`,width:`${Math.min(innerWidth-8,rect.width+10)}px`,height:`${Math.min(innerHeight-8,rect.height+10)}px`});highlights.appendChild(highlight);
-    const callout=document.createElement('div');callout.className='help-callout';callout.innerHTML=`<b>${index+1}</b>${uiText(app.lang,item.key)}`;callouts.appendChild(callout);const pos=helpPosition(rect,item.placement,callout.offsetWidth,callout.offsetHeight);Object.assign(callout.style,{left:`${pos.left}px`,top:`${pos.top}px`});rendered.push({target:rect,callout});
+  HELP_ITEMS.forEach(item=>{const target=$(item.target);if(!target)return;const raw=target.getBoundingClientRect(),style=getComputedStyle(target),rect={left:Math.max(0,raw.left),top:Math.max(0,raw.top),right:Math.min(innerWidth,raw.right),bottom:Math.min(innerHeight,raw.bottom)};rect.width=Math.max(0,rect.right-rect.left);rect.height=Math.max(0,rect.bottom-rect.top);if(style.display==='none'||rect.width<2||rect.height<2)return;
+    const hLeft=Math.max(4,rect.left-5),hTop=Math.max(4,rect.top-5),hRight=Math.min(innerWidth-4,rect.right+5),hBottom=Math.min(innerHeight-4,rect.bottom+5),highlight=document.createElement('div');highlight.className='help-highlight';Object.assign(highlight.style,{left:`${hLeft}px`,top:`${hTop}px`,width:`${Math.max(0,hRight-hLeft)}px`,height:`${Math.max(0,hBottom-hTop)}px`});highlights.appendChild(highlight);
+    const callout=document.createElement('div');callout.className='help-callout';callout.innerHTML=`<b>${rendered.length+1}</b>${uiText(app.lang,item.key)}`;callouts.appendChild(callout);const pos=helpPosition(rect,item.placement,callout.offsetWidth,callout.offsetHeight);Object.assign(callout.style,{left:`${pos.left}px`,top:`${pos.top}px`});rendered.push({target:rect,callout,item});
   });
-  const ns='http://www.w3.org/2000/svg';rendered.forEach(({target,callout})=>{const box=callout.getBoundingClientRect(),tx=target.left+target.width/2,ty=target.top+target.height/2,cx=box.left+box.width/2,cy=box.top+box.height/2,line=document.createElementNS(ns,'line');line.setAttribute('x1',String(Math.max(box.left,Math.min(box.right,tx))));line.setAttribute('y1',String(Math.max(box.top,Math.min(box.bottom,ty))));line.setAttribute('x2',String(Math.max(target.left,Math.min(target.right,cx))));line.setAttribute('y2',String(Math.max(target.top,Math.min(target.bottom,cy))));lines.appendChild(line);});
+  const ns='http://www.w3.org/2000/svg';rendered.forEach(({target,callout,item})=>{const box=callout.getBoundingClientRect(),start=anchorPoint(box,item.from),end={x:target.left+target.width*item.to[0],y:target.top+target.height*item.to[1]},dx=end.x-start.x,dy=end.y-start.y,distance=Math.max(1,Math.hypot(dx,dy)),bend=Math.min(34,distance*.12),mx=(start.x+end.x)/2,my=(start.y+end.y)/2,cx=mx-dy/distance*bend,cy=my+dx/distance*bend,path=document.createElementNS(ns,'path');path.classList.add('help-arrow');path.setAttribute('d',`M ${start.x} ${start.y} Q ${cx} ${cy} ${end.x} ${end.y}`);lines.appendChild(path);});
 }
 function openHelp(){if(app.mode!=='explore')setMode('explore');const overlay=$('#helpOverlay');overlay.hidden=false;try{localStorage.setItem(helpStorageKey,'1');}catch{}requestAnimationFrame(renderHelp);}
 function closeHelp(){const overlay=$('#helpOverlay');overlay.hidden=true;$('#helpCallouts').replaceChildren();$('#helpHighlights').replaceChildren();$('#helpArrowLines').replaceChildren();}

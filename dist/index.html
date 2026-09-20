@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090b12">
+  <meta name="description" content="Eleven live, adjustable visual-illusion demonstrations for outreach events.">
+  <title>Visual Illusions Lab</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23ffcf5a' stroke-width='7'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%2374e0ff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./vendor/jspsych.css">
+  <link rel="stylesheet" href="./styles.css?v=17">
+</head>
+<body>
+  <div class="app-shell" id="app">
+    <header class="topbar">
+      <div class="brand" aria-label="Visual Illusions Lab">
+        <span class="brand-mark" aria-hidden="true"><i></i></span>
+        <span><b id="brandTitle">Visual Illusions</b><small id="brandSubtitle">DICE Lab</small></span>
+      </div>
+      <div class="mode-switch" role="tablist" aria-label="App mode">
+        <button class="mode-btn is-active" id="exploreMode" data-mode="explore" role="tab" aria-selected="true">Explore</button>
+        <button class="mode-btn" id="presentMode" data-mode="present" role="tab" aria-selected="false">Presentation</button>
+        <button class="mode-btn" id="metaMode" data-mode="meta" role="tab" aria-selected="false">Meta</button>
+      </div>
+      <div class="top-actions">
+        <button class="lang-btn" id="ageBtn" aria-label="Audience age">Adults</button>
+        <button class="lang-btn" id="langBtn" aria-label="Change language">NO</button>
+        <button class="icon-btn" id="pauseBtn" aria-label="Pause animation" title="Pause animation">
+          <span class="pause-icon" aria-hidden="true"></span>
+        </button>
+        <button class="icon-btn" id="fullscreenBtn" aria-label="Enter fullscreen" title="Fullscreen">
+          <span class="fullscreen-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <aside class="demo-rail" aria-label="Illusion demos">
+      <div class="rail-label" id="railLabel">Demos</div>
+      <nav id="demoNav"></nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="stage-column">
+        <div class="stage-frame" id="stageFrame">
+          <div id="jspsych-target" class="canvas-host" aria-label="Interactive illusion canvas"></div>
+          <div class="stage-vignette" aria-hidden="true"></div>
+          <div class="presentation-copy" id="presentationCopy" aria-live="polite">
+            <div class="copy-kicker"><span id="slideNumber">01 / 11</span><span class="copy-line"></span><span id="phaseLabel">LOOK</span></div>
+            <h1 id="presentationTitle">Colour aftereffect: Stonehenge</h1>
+            <p id="presentationHint">Keep your eyes on the dot.</p>
+            <small id="presentationCredit"></small>
+          </div>
+          <div class="presentation-logo-slide" id="presentationLogo" hidden>
+            <div>
+              <h1 id="logoSlideTitle">Visual Illusions</h1>
+              <img src="./assets/isp.svg" alt="Institute for Social and Personality Psychology, University of Bergen">
+              <p id="logoSlideSubtitle">Bergen Laboratory for the Study of Decision, Intuition, Consciousness, and Emotion (DICE)</p>
+            </div>
+          </div>
+          <div class="stage-status">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span id="statusText">LIVE CANVAS</span>
+          </div>
+          <div class="presentation-progress" aria-hidden="true"><i id="presentationProgress"></i></div>
+        </div>
+        <div class="under-stage">
+          <div>
+            <span class="eyebrow" id="demoCategory">AFTEREFFECT</span>
+            <h2 id="demoTitle">Colour aftereffect: Stonehenge</h2>
+            <p id="demoSummary">Adapt to strange colours, then watch a grey scene appear naturally coloured.</p>
+          </div>
+          <div class="hint-card">
+            <span id="tryLabel">TRY THIS</span>
+            <p id="demoHint">Keep your eyes on the centre dot. Do not follow the picture when the colours change.</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="control-panel" id="controlPanel">
+        <div class="panel-heading">
+          <div><span id="controlsLabel">LIVE CONTROLS</span><h3 id="controlsTitle">Stonehenge</h3></div>
+          <button id="resetBtn" class="text-btn">Reset</button>
+        </div>
+        <div id="controls" class="controls"></div>
+        <details class="copy-editor">
+          <summary id="copyEditorLabel">Presentation text</summary>
+          <label><span id="titleLabel">Title</span><input id="titleInput" type="text" maxlength="80"></label>
+          <label><span id="hintLabel">Hint</span><textarea id="hintInput" rows="3" maxlength="180"></textarea></label>
+        </details>
+        <button id="settingsBtn" class="settings-btn">Show settings JSON</button>
+        <div class="engine-note">
+          <span class="engine-glyph" aria-hidden="true">⌁</span>
+          <p><b id="gpuLabel">GPU rendered</b><br><span id="engineLabel">jsPsych Psychophysics + PIXI/WebGL</span></p>
+        </div>
+      </aside>
+    </main>
+
+    <section class="meta-settings" id="metaSettings" aria-labelledby="metaTitle">
+      <div class="meta-settings-card">
+        <span class="eyebrow" id="metaEyebrow">PRESENTATION</span>
+        <h1 id="metaTitle">Presentation meta settings</h1>
+        <p id="metaIntro">Adjust the shared presentation layout and logo interludes. These settings are saved with the demo settings.</p>
+        <section class="brand-preview" aria-labelledby="metaBrandLabel">
+          <span class="eyebrow" id="metaBrandLabel">BRANDING-SLIDE PREVIEW</span>
+          <div class="brand-preview-canvas">
+            <h2 id="metaBrandTitle">Visual Illusions</h2>
+            <img src="./assets/isp.svg" alt="Institute for Social and Personality Psychology, University of Bergen">
+            <p id="metaBrandSubtitle">Bergen Laboratory for the Study of Decision, Intuition, Consciousness, and Emotion (DICE)</p>
+          </div>
+        </section>
+        <div class="meta-controls" id="metaControls"></div>
+        <div class="meta-actions">
+          <button class="settings-btn" id="resetMetaBtn">Reset meta settings</button>
+          <button class="settings-btn" id="metaSettingsBtn">Show settings JSON</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <dialog class="settings-dialog" id="settingsDialog">
+    <div class="dialog-head"><h2 id="settingsTitle">Current saved settings</h2><button id="settingsCloseIcon" aria-label="Close">×</button></div>
+    <p id="settingsHelp">Copy this JSON and send it to update the defaults.</p>
+    <pre id="settingsJson" tabindex="0"></pre>
+    <div class="dialog-actions"><button id="copySettingsBtn">Copy JSON</button><button id="settingsCloseBtn">Close</button></div>
+  </dialog>
+
+  <script src="./vendor/pixi-8.13.2.min.js"></script>
+  <script src="./vendor/jspsych-8.3.0.min.js"></script>
+  <script src=

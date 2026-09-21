@@ -13,7 +13,7 @@ function drawContained(ctx,img){
 
 export default {
   id:'absence', short:'Illusion of absence', title:'The illusion of absence', category:'Occlusion',
-  attribution:{en:'Based on the work of Vebjørn Ekroll, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).',no:'Basert på arbeidet til Vebjørn Ekroll, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland).'},
+  attribution:{en:'Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).',no:'Basert på arbeidet til Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland).'},
   summary:'A table first looks perfectly empty behind a grid. Revealing the objects makes it seem impossible that all of them could have been there moments earlier.',
   hint:'Start with the covered scene: “Wow, a perfectly empty table.” Then watch the reveal—and ask whether all those objects could really have been hidden.',
   reveal:'They were hidden all along. The visual system completes the uninterrupted table surface behind the grid, so the object-filled regions are experienced as absence rather than occlusion.',

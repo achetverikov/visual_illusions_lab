@@ -103,7 +103,7 @@ export default {
       presentation:{kids:'Se på bordet bak gitteret. Ser det tomt ut? Se hva som skjulte seg der når mer av bordet vises.',adults:'Se på bordet bak gitteret. Virker det tomt? Legg merke til hva som hadde vært skjult der når mer av motivet avsløres.'}
     },
     explanation:{kids:'Gjenstandene var der hele tiden. Hjernen fyller inn den glatte bordflaten bak gitteret, slik at du ser tom plass i stedet for gjenstander som skjuler seg der.',adults:'Gjenstandene var der hele tiden. Når en del av en flate er skjult, fullfører synssystemet vanligvis flaten bak hindringen. Her fortsetter det den synlige bordflaten bak gitteret, slik at de skjulte områdene oppleves som tomt bord i stedet for steder der gjenstander kan være skjult.'},
-    attribution:'Basert på arbeidet til Vebjørn Ekroll, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland).',
+    attribution:'Basert på arbeidet til Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland).',
     presentation:[
       {title:'Illusjonen om tomt rom',instruction:{kids:'',adults:''}},
       {title:'',instruction:{kids:'Se på bordet bak gitteret. Ser det tomt ut?',adults:'Se på bordet bak gitteret. Ser det helt tomt ut?'}},

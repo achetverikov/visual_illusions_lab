@@ -315,7 +315,7 @@ export default {
       "kids": "The objects were there all along. Your brain fills in the smooth table behind the grid, so it looks like empty space instead of objects hiding behind it.",
       "adults": "The objects were there all along. When part of a surface is occluded, the visual system usually completes it behind the occluder. Here it continues the visible table surface behind the grid, so the hidden regions are experienced as empty table rather than as places where objects might be concealed."
     },
-    "attribution": "Based on the work of Vebjørn Ekroll, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).",
+    "attribution": "Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).",
     "presentation": [
       {
         "type": "interstitial",

@@ -375,7 +375,7 @@ demos:
         behind the occluder. Here it continues the visible table surface behind the grid, so the hidden regions are
         experienced as empty table rather than as places where objects might be concealed.
     attribution: >-
-      Based on the work of Vebjørn Ekroll, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).
+      Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).
     presentation:
     - type: interstitial
       title: "The illusion of absence"

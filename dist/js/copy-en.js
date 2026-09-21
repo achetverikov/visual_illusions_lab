@@ -145,7 +145,7 @@ export default {
       "kids": "The blank moment hides the usual signal that tells you where something changed. Your attention then has to compare details across the two pictures, so even a big change can be hard to find.",
       "adults": "A change would normally create a strong local visual transient—a sudden flicker or movement that automatically attracts attention. The brief blank removes that cue, so attention has to compare scene details across time instead. That makes even a large change surprisingly difficult to detect."
     },
-    "attribution": "Based on the work of Ronald Rensink and colleagues (University of British Columbia, Canada)."
+    "attribution": "Based on the work of Ronald Rensink and colleagues (University of British Columbia, Canada). Copyright in the source images remains with their respective authors and rightsholders; the images are not covered by this site's CC BY 4.0 license."
   },
   "pacman": {
     "short_title": "Pac-Man change",
@@ -315,7 +315,7 @@ export default {
       "kids": "The objects were there all along. Your brain fills in the smooth table behind the grid, so it looks like empty space instead of objects hiding behind it.",
       "adults": "The objects were there all along. When part of a surface is occluded, the visual system usually completes it behind the occluder. Here it continues the visible table surface behind the grid, so the hidden regions are experienced as empty table rather than as places where objects might be concealed."
     },
-    "attribution": "Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).",
+    "attribution": "Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands). Copyright in the source images remains with their respective authors and rightsholders; the images are not covered by this site's CC BY 4.0 license.",
     "presentation": [
       {
         "type": "interstitial",

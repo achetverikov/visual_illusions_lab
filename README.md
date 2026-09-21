@@ -28,3 +28,13 @@ Each demonstration has its own state and controls. jspsych-psychophysics receive
 - P: presentation / explore mode
 - F: fullscreen
 - Escape: leave presentation mode
+
+## License and image rights
+
+Except for identified third-party material, this project's original code,
+text, and visual material is licensed under [CC BY 4.0](LICENSE.md).
+
+The source images used by the **Illusion of Absence** and **Change Blindness**
+demos are excluded from that license. Copyright in those images remains with
+their respective authors and other rightsholders. See [LICENSE.md](LICENSE.md)
+for the exact excluded paths and full notice.

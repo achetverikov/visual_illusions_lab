@@ -231,7 +231,7 @@ demos:
         attracts attention. The brief blank removes that cue, so attention has to compare scene details across time
         instead. That makes even a large change surprisingly difficult to detect.
     attribution: >-
-      Based on the work of Ronald Rensink and colleagues (University of British Columbia, Canada).
+      Based on the work of Ronald Rensink and colleagues (University of British Columbia, Canada). Copyright in the source images remains with their respective authors and rightsholders; the images are not covered by this site's CC BY 4.0 license.
 
   pacman:
     short_title: "Pac-Man change"
@@ -375,7 +375,7 @@ demos:
         behind the occluder. Here it continues the visible table surface behind the grid, so the hidden regions are
         experienced as empty table rather than as places where objects might be concealed.
     attribution: >-
-      Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands).
+      Based on the work of Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier, and colleagues (University of Bergen, Norway; Radboud University, the Netherlands). Copyright in the source images remains with their respective authors and rightsholders; the images are not covered by this site's CC BY 4.0 license.
     presentation:
     - type: interstitial
       title: "The illusion of absence"

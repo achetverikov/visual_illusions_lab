@@ -67,7 +67,7 @@ export default {
       presentation:{kids:'Se på de to bildene som veksler frem og tilbake. Noe endrer seg hele tiden. Klarer du å finne det?',adults:'Se nøye på motivene som veksler, og let etter objektet eller området som endrer seg over det korte tomme intervallet.'}
     },
     explanation:{kids:'Det tomme øyeblikket skjuler signalet som vanligvis forteller deg hvor noe endret seg. Oppmerksomheten må da sammenligne detaljer i de to bildene, så selv en stor endring kan være vanskelig å finne.',adults:'En endring ville normalt skape et sterkt lokalt visuelt signal – et plutselig blink eller en bevegelse som automatisk tiltrekker oppmerksomheten. Det korte tomme intervallet fjerner dette signalet, slik at oppmerksomheten må sammenligne detaljene i motivet over tid. Derfor kan selv en stor endring være overraskende vanskelig å oppdage.'},
-    attribution:'Basert på arbeidet til Ronald Rensink og kolleger (University of British Columbia, Canada).'
+    attribution:'Basert på arbeidet til Ronald Rensink og kolleger (University of British Columbia, Canada). Opphavsretten til kildebildene tilhører deres respektive opphavspersoner og rettighetshavere; bildene omfattes ikke av nettstedets CC BY 4.0-lisens.'
   },
   pacman:{
     short_title:'Pac-Man-endring',title:'Pac-Mans mystiske labyrint',category:'Oppmerksomhet',
@@ -103,7 +103,7 @@ export default {
       presentation:{kids:'Se på bordet bak gitteret. Ser det tomt ut? Se hva som skjulte seg der når mer av bordet vises.',adults:'Se på bordet bak gitteret. Virker det tomt? Legg merke til hva som hadde vært skjult der når mer av motivet avsløres.'}
     },
     explanation:{kids:'Gjenstandene var der hele tiden. Hjernen fyller inn den glatte bordflaten bak gitteret, slik at du ser tom plass i stedet for gjenstander som skjuler seg der.',adults:'Gjenstandene var der hele tiden. Når en del av en flate er skjult, fullfører synssystemet vanligvis flaten bak hindringen. Her fortsetter det den synlige bordflaten bak gitteret, slik at de skjulte områdene oppleves som tomt bord i stedet for steder der gjenstander kan være skjult.'},
-    attribution:'Basert på arbeidet til Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland).',
+    attribution:'Basert på arbeidet til Vebjørn Ekroll, Pierre-Pascal Forster, Rob van Lier og kolleger (Universitetet i Bergen, Norge; Radboud University, Nederland). Opphavsretten til kildebildene tilhører deres respektive opphavspersoner og rettighetshavere; bildene omfattes ikke av nettstedets CC BY 4.0-lisens.',
     presentation:[
       {title:'Illusjonen om tomt rom',instruction:{kids:'',adults:''}},
       {title:'',instruction:{kids:'Se på bordet bak gitteret. Ser det tomt ut?',adults:'Se på bordet bak gitteret. Ser det helt tomt ut?'}},

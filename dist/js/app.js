@@ -1,6 +1,6 @@
-import illusions from './illusions/index.js?v=22';
+import illusions from './illusions/index.js?v=23';
 import { createPixiStimuli } from './pixi-scenes.js?v=19';
-import { uiText, demoText, controlText, presentationCueText } from './i18n.js?v=22';
+import { uiText, demoText, controlText, presentationCueText } from './i18n.js?v=23';
 
 const $=sel=>document.querySelector(sel);
 const storageKey='visual-illusions-lab-v5',legacyKey='visual-illusions-lab-v4',cookiePrefix='vil_settings_v1_';

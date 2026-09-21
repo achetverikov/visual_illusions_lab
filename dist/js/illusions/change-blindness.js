@@ -41,7 +41,7 @@ function targetFor(state){return targets[state.example]||targets.airplane;}
 
 const demo={
   id:'change-blindness', short:'Change blindness', title:'Change blindness', category:'Attention',
-  attribution:{en:'Based on the work of Ronald Rensink and colleagues (University of British Columbia, Canada).',no:'Basert på arbeidet til Ronald Rensink og kolleger (University of British Columbia, Canada).'},
+  attribution:{en:"Based on the work of Ronald Rensink and colleagues (University of British Columbia, Canada). Copyright in the source images remains with their respective authors and rightsholders; the images are not covered by this site's CC BY 4.0 license.",no:'Basert på arbeidet til Ronald Rensink og kolleger (University of British Columbia, Canada). Opphavsretten til kildebildene tilhører deres respektive opphavspersoner og rettighetshavere; bildene omfattes ikke av nettstedets CC BY 4.0-lisens.'},
   summary:'Authentic Rensink flicker images alternate with a brief blank. Even a large change can remain hard to spot when its local transient is removed.',
   hint:'Compare scene A and B. The blank is short—but long enough to hide the usual visual “pop”. Can you find the changing object?',
   reveal:'Without a local motion transient, attention must compare scene details across time. The feeling of a complete scene is much richer than the stored detail available for comparison.',
